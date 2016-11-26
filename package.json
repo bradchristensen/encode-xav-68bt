@@ -1,0 +1,35 @@
+{
+  "name": "encode-xav-68bt",
+  "version": "1.0.0",
+  "description": "A command line helper to encode videos in a format suitable for playback on the Sony XAV-68BT head unit",
+  "main": "index.js",
+  "bin": {
+    "encode-xav-68bt": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradchristensen/encode-xav-68bt.git"
+  },
+  "author": "Brad Christensen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bradchristensen/encode-xav-68bt/issues"
+  },
+  "homepage": "https://github.com/bradchristensen/encode-xav-68bt#readme",
+  "dependencies": {
+    "cpu-stat": "^2.0.1",
+    "minimist": "^1.2.0",
+    "queue": "^4.0.0",
+    "shelljs": "^0.7.5"
+  },
+  "devDependencies": {
+    "eslint": "^3.11.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1"
+  }
+}
