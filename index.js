@@ -34,10 +34,10 @@ const files = shelljs
 const queue = createQueue();
 
 const createFfmpegArgs = (inputFile, outputFile) => {
-  const strArgs = '-n -threads 1 -i INPUTFILE -c:v mpeg4 -vtag xvid -b:v 3000k ' +
-    '-vf scale=720:-1 -c:a libmp3lame -b:a 192k OUTPUTFILE';
+  const strArgs = '-i INPUTFILE -nostats -hide_banner -loglevel error -n -threads 1 -c:v mpeg4 ' +
+    '-vtag xvid -b:v 3000k -vf scale=720:-1 -c:a libmp3lame -b:a 192k OUTPUTFILE';
   const newArgs = strArgs.split(' ');
-  newArgs[4] = inputFile;
+  newArgs[1] = inputFile;
   newArgs[newArgs.length - 1] = outputFile;
   return newArgs;
 };
@@ -46,7 +46,8 @@ files.forEach((file) => {
   queue.push((cb) => {
     const inputFile = path.resolve(file);
     const basename = path.basename(inputFile);
-    const outputFile = path.join(outputDirectory, basename);
+    const basenameWithoutExt = path.basename(inputFile, path.extname(inputFile));
+    const outputFile = path.join(outputDirectory, `${basenameWithoutExt}.avi`);
     if (shelljs.test('-e', outputFile)) {
       console.log(`Skipped encoding existing file ${basename}`);
       cb();
