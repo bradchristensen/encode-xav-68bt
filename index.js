@@ -5,11 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { promisify } = require('util');
-const parseArgs = require('minimist');
-const shelljs = require('shelljs');
-const createQueue = require('queue');
-const childProcess = require('child_process');
+
 const cpuStat = require('cpu-stat');
+const crossSpawn = require('cross-spawn');
+const parseArgs = require('minimist');
+const createQueue = require('queue');
+const shelljs = require('shelljs');
 const uuid = require('uuid');
 
 const unlink = promisify(fs.unlink);
@@ -19,13 +20,9 @@ const devNull = isWindows ? 'NUL' : '/dev/null';
 
 function spawn(...args) {
   return new Promise((resolve) => {
-    const process = childProcess.spawn(...args);
-
+    const process = crossSpawn(...args);
     process.stderr.on('data', data => console.log(`${data}`));
-
-    process.on('close', () => {
-      resolve();
-    });
+    process.on('close', () => resolve());
   });
 }
 
@@ -57,7 +54,7 @@ const queue = createQueue();
 const createFfmpegArgs = (inputFile, outputFile, logFileId, pass = 1) => {
   const passDependentFlags = pass === 1 ? '-y -f avi' : '-n';
   const strArgs = '-i INPUTFILE -nostats -hide_banner -loglevel error -threads 1 -c:v mpeg4 ' +
-    `-vtag xvid -pass ${pass} -passlogfile ${logFileId} -b:v 3000k -vf scale=720:-1 ` +
+    `-vtag xvid -pass ${pass} -passlogfile ${logFileId} -b:v 2500k -vf scale=720:-1 ` +
     `${passDependentFlags} -c:a libmp3lame -b:a 192k OUTPUTFILE`;
   const newArgs = strArgs.split(' ');
   newArgs[1] = inputFile;
