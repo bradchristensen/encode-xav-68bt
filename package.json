@@ -1,6 +1,6 @@
 {
   "name": "encode-xav-68bt",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A command line helper to encode videos in a format suitable for playback on the Sony XAV-68BT head unit",
   "main": "index.js",
   "engines": {
